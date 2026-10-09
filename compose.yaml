@@ -1,0 +1,23 @@
+services:
+  catalogue:
+    build: .
+    image: 418cloud/catalogue:latest
+    restart: unless-stopped
+    ports:
+      # Exposé en boucle locale seulement : c'est le reverse proxy du
+      # serveur qui termine le TLS et fait face à Internet. Ouvrir 8418 au
+      # monde servirait du HTTP en clair.
+      - "127.0.0.1:8418:8418"
+    environment:
+      ORIGINE: "*"
+      DUREE: "900"
+    volumes:
+      # Le catalogue est monté, pas cuit dans l'image : le remplacer et
+      # recharger ne demande ni build ni redémarrage. L'image en garde une
+      # copie, qui sert de repli si le montage manque.
+      - ./api.json:/app/api.json:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8418/sante',timeout=2)"]
+      interval: 30s
+      timeout: 3s
+      retries: 3

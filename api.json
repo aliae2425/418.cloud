@@ -1,0 +1,268 @@
+{
+  "fournisseurs": {
+    "chatgpt": {
+      "_pourquoi": "Le backend Codex n'expose AUCUN catalogue — ni route, ni config, ni cache — et models.dev ne le décrit pas non plus : il décrit l'API facturée au jeton, pas l'abonnement. Cette liste est tenue à la main, et c'est la raison d'être de ce fichier. Les coûts sont à zéro parce que l'abonnement est forfaitaire : afficher un prix au jeton ici serait faux.",
+      "_verifier": "Un nom refusé revient en clair dans l'erreur de l'API. Si un modèle disparaît, le retirer ici ; s'il en arrive un, l'ajouter. Rien ne le signalera tout seul.",
+      "connexion": "abonnement",
+      "doc": "https://chatgpt.com",
+      "env": [],
+      "modeles": {
+        "gpt-5.6": {
+          "cout": {
+            "cache": 0,
+            "entree": 0,
+            "sortie": 0
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-5.6",
+          "outils": true,
+          "pieces": false,
+          "raisonnement": true,
+          "sorti": ""
+        },
+        "gpt-5.6-luna": {
+          "cout": {
+            "cache": 0,
+            "entree": 0,
+            "sortie": 0
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-5.6 Luna",
+          "outils": true,
+          "pieces": false,
+          "raisonnement": true,
+          "sorti": ""
+        },
+        "gpt-5.6-terra": {
+          "cout": {
+            "cache": 0,
+            "entree": 0,
+            "sortie": 0
+          },
+          "defaut": true,
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-5.6 Terra",
+          "outils": true,
+          "pieces": false,
+          "raisonnement": true,
+          "sorti": ""
+        }
+      },
+      "nom": "ChatGPT"
+    },
+    "openai": {
+      "connexion": "cle",
+      "doc": "https://platform.openai.com/docs/models",
+      "env": [
+        "OPENAI_API_KEY"
+      ],
+      "modeles": {
+        "gpt-5.5": {
+          "cout": {
+            "cache": 0.5,
+            "entree": 5,
+            "sortie": 30
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-5.5",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-04-23"
+        },
+        "gpt-5.5-pro": {
+          "cout": {
+            "cache": null,
+            "entree": 30,
+            "sortie": 180
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-5.5 Pro",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-04-23"
+        },
+        "gpt-5.6": {
+          "cout": {
+            "cache": 0.4,
+            "entree": 4,
+            "sortie": 20
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-5.6",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-07-09"
+        },
+        "gpt-5.6-luna": {
+          "cout": {
+            "cache": 0.02,
+            "entree": 0.2,
+            "sortie": 1.2
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-5.6 Luna",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-07-09"
+        },
+        "gpt-5.6-sol": {
+          "cout": {
+            "cache": 0.4,
+            "entree": 4,
+            "sortie": 20
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-5.6 Sol",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-07-09"
+        },
+        "gpt-5.6-terra": {
+          "cout": {
+            "cache": 0.2,
+            "entree": 2,
+            "sortie": 12
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-5.6 Terra",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-07-09"
+        },
+        "gpt-6-astra": {
+          "cout": {
+            "cache": 1,
+            "entree": 10,
+            "sortie": 50
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-6 Astra",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-09-04"
+        },
+        "gpt-6-luna": {
+          "cout": {
+            "cache": 0.01,
+            "entree": 0.1,
+            "sortie": 0.5
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-6 Luna",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-09-22"
+        },
+        "gpt-6-sol": {
+          "cout": {
+            "cache": 0.2,
+            "entree": 2,
+            "sortie": 10
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-6 Sol",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-09-22"
+        },
+        "gpt-6.1-sol": {
+          "cout": {
+            "cache": 0.1,
+            "entree": 2,
+            "sortie": 10
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "GPT-6.1 Sol",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-09-29"
+        },
+        "gpt-daybreak-blue-latest": {
+          "cout": {
+            "cache": 0.4,
+            "entree": 4,
+            "sortie": 20
+          },
+          "limite": {
+            "contexte": 1050000,
+            "sortie": 128000
+          },
+          "nom": "Daybreak Blue",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-08-07"
+        },
+        "gpt-daybreak-red-latest": {
+          "cout": {
+            "cache": 1.25,
+            "entree": 12.5,
+            "sortie": 75
+          },
+          "limite": {
+            "contexte": 400000,
+            "sortie": 128000
+          },
+          "nom": "Daybreak Red",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": true,
+          "sorti": "2026-08-07"
+        }
+      },
+      "nom": "OpenAI"
+    }
+  },
+  "genere": "2026-10-09T13:06:26Z",
+  "source": "https://models.dev/api.json",
+  "version": 1
+}

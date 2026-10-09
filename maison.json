@@ -1,0 +1,40 @@
+{
+  "chatgpt": {
+    "nom": "ChatGPT",
+    "connexion": "abonnement",
+    "env": [],
+    "doc": "https://chatgpt.com",
+    "_pourquoi": "Le backend Codex n'expose AUCUN catalogue — ni route, ni config, ni cache — et models.dev ne le décrit pas non plus : il décrit l'API facturée au jeton, pas l'abonnement. Cette liste est tenue à la main, et c'est la raison d'être de ce fichier. Les coûts sont à zéro parce que l'abonnement est forfaitaire : afficher un prix au jeton ici serait faux.",
+    "_verifier": "Un nom refusé revient en clair dans l'erreur de l'API. Si un modèle disparaît, le retirer ici ; s'il en arrive un, l'ajouter. Rien ne le signalera tout seul.",
+    "modeles": {
+      "gpt-5.6-terra": {
+        "nom": "GPT-5.6 Terra",
+        "outils": true,
+        "pieces": false,
+        "raisonnement": true,
+        "limite": { "contexte": 1050000, "sortie": 128000 },
+        "cout": { "entree": 0, "sortie": 0, "cache": 0 },
+        "sorti": "",
+        "defaut": true
+      },
+      "gpt-5.6": {
+        "nom": "GPT-5.6",
+        "outils": true,
+        "pieces": false,
+        "raisonnement": true,
+        "limite": { "contexte": 1050000, "sortie": 128000 },
+        "cout": { "entree": 0, "sortie": 0, "cache": 0 },
+        "sorti": ""
+      },
+      "gpt-5.6-luna": {
+        "nom": "GPT-5.6 Luna",
+        "outils": true,
+        "pieces": false,
+        "raisonnement": true,
+        "limite": { "contexte": 1050000, "sortie": 128000 },
+        "cout": { "entree": 0, "sortie": 0, "cache": 0 },
+        "sorti": ""
+      }
+    }
+  }
+}
