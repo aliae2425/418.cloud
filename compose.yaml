@@ -3,21 +3,49 @@ services:
     build: .
     image: 418cloud/catalogue:latest
     restart: unless-stopped
-    ports:
-      # Exposé en boucle locale seulement : c'est le reverse proxy du
-      # serveur qui termine le TLS et fait face à Internet. Ouvrir 8418 au
-      # monde servirait du HTTP en clair.
-      - "127.0.0.1:8418:8418"
+
+    # AUCUN `ports:`. Traefik joint le conteneur par le réseau partagé ;
+    # publier un port sur l'hôte ouvrirait une seconde porte, en clair, qui
+    # contournerait le TLS et les middlewares.
+    networks:
+      - traefik
+
     environment:
-      ORIGINE: "*"
+      ORIGINE: "*"          # catalogue public : il ne dit rien qu'on cache
       DUREE: "900"
+
     volumes:
-      # Le catalogue est monté, pas cuit dans l'image : le remplacer et
-      # recharger ne demande ni build ni redémarrage. L'image en garde une
-      # copie, qui sert de repli si le montage manque.
+      # Monté, pas cuit dans l'image : remplacer le fichier et recharger ne
+      # demande ni build ni redémarrage. L'image en garde une copie, qui sert
+      # de repli si le montage manque.
       - ./api.json:/app/api.json:ro
-    healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8418/sante',timeout=2)"]
-      interval: 30s
-      timeout: 3s
-      retries: 3
+
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${RESEAU:-traefik}"
+
+      - "traefik.http.routers.418cloud.rule=Host(`${DOMAINE}`)"
+      - "traefik.http.routers.418cloud.entrypoints=websecure"
+      - "traefik.http.routers.418cloud.tls.certresolver=${CERTRESOLVER:-letsencrypt}"
+      - "traefik.http.routers.418cloud.middlewares=418cloud-compress"
+
+      # Le port du CONTENEUR, pas celui de l'hôte — il n'y en a plus.
+      - "traefik.http.services.418cloud.loadbalancer.server.port=8418"
+
+      # Mesuré : 7 184 octets → 1 054 en gzip, 85 % en moins. Chaque Revit
+      # qui démarre tire ce fichier ; c'est le middleware le plus rentable
+      # du lot, et il ne coûte qu'une ligne.
+      - "traefik.http.middlewares.418cloud-compress.compress=true"
+
+      # Le `healthcheck` du Dockerfile suffit à Docker. Celui-ci dit à
+      # Traefik de ne pas router vers un conteneur qui relit un JSON cassé.
+      - "traefik.http.services.418cloud.loadbalancer.healthcheck.path=/sante"
+      - "traefik.http.services.418cloud.loadbalancer.healthcheck.interval=30s"
+
+networks:
+  traefik:
+    # Le réseau que Traefik écoute déjà. Il n'est pas créé ici : s'il
+    # manque, `docker compose up` échoue tout de suite plutôt que de monter
+    # un conteneur que rien ne joindra.
+    name: ${RESEAU:-traefik}
+    external: true

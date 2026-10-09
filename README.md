@@ -53,25 +53,46 @@ Relancer `generer.py` de temps en temps est la seule hygiène.
 
 ## Déployer
 
+Derrière **Traefik**, qui termine le TLS et route sur le nom.
+
 ```bash
+cp .env.exemple .env      # remplir DOMAINE, RESEAU, CERTRESOLVER
+docker compose config     # relire ce que l'interpolation a donné
 docker compose up -d --build
-curl -s localhost:8418/api.json | head
+curl -s https://$DOMAINE/api.json | head
 ```
 
-Le service écoute sur **127.0.0.1:8418** seulement : c'est au reverse proxy
-du serveur de terminer le TLS et de faire face à Internet. L'ouvrir au monde
-servirait du HTTP en clair.
+**Aucun port n'est publié sur l'hôte.** Traefik joint le conteneur par le
+réseau partagé ; publier un port ouvrirait une seconde porte, en clair, qui
+contournerait le TLS et les middlewares.
+
+Le réseau est déclaré `external` : s'il manque, `up` échoue tout de suite
+plutôt que de monter un conteneur que rien ne joindra. `docker network ls`
+dira son nom — `traefik` chez beaucoup, `proxy` chez d'autres.
+
+Un seul middleware, et il se mesure : **7 184 octets → 1 054 en gzip, 85 %
+en moins**. Chaque Revit qui démarre tire ce fichier.
+
+| variable | défaut | où |
+|---|---|---|
+| `DOMAINE` | — | `.env`, le nom routé par Traefik |
+| `RESEAU` | `traefik` | `.env`, le réseau que Traefik écoute |
+| `CERTRESOLVER` | `letsencrypt` | `.env`, le résolveur déclaré chez Traefik |
+| `PORT` | `8418` | image — dans le conteneur, pas sur l'hôte |
+| `CATALOGUE` | `/app/api.json` | image — chemin du fichier servi |
+| `ORIGINE` | `*` | compose — `Access-Control-Allow-Origin` |
+| `DUREE` | `900` | compose — `max-age`, en secondes |
 
 `api.json` est **monté**, pas cuit dans l'image : le remplacer et recharger
 ne demande ni build ni redémarrage. L'image en garde une copie, qui sert de
 repli si le montage manque.
 
-| variable | défaut | |
-|---|---|---|
-| `PORT` | `8418` | |
-| `CATALOGUE` | `/app/api.json` | chemin du fichier servi |
-| `ORIGINE` | `*` | `Access-Control-Allow-Origin` |
-| `DUREE` | `900` | `max-age`, en secondes |
+Pour l'essayer sans Traefik, en local :
+
+```bash
+python service.py          # écoute sur :8418
+curl -s localhost:8418/api.json | head
+```
 
 ## Les routes
 
