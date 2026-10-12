@@ -29,6 +29,35 @@
       },
       "nom": "⚠ Ne doit PAS apparaître"
     },
+    "essai-reseau": {
+      "_essai": "TEMOIN RESEAU, a retirer apres verification. Il n'existe QUE cote service : il n'est PAS dans l'instantane embarque du volet. S'il apparait a la premiere etape de /connect, c'est que le client a bien tire cloud.418.archi — c'est la seule chose qui le prouve, puisque les autres temoins sont satisfaits par l'instantane. Sa connexion est `cle`, donc il est vraiment proposable ; ne pas le choisir, aucune cle ne lui repondra.",
+      "connexions": {
+        "cle": {
+          "detail": "présent seulement sur cloud.418.archi",
+          "env": [],
+          "modeles": {
+            "essai-reseau-modele": {
+              "cout": {
+                "cache": 0,
+                "entree": 0,
+                "sortie": 0
+              },
+              "limite": {
+                "contexte": 4321000,
+                "sortie": 1000
+              },
+              "nom": "⚠ Modèle témoin réseau",
+              "outils": true,
+              "pieces": false,
+              "raisonnement": false,
+              "sorti": "2099-12-31"
+            }
+          },
+          "nom": "Venu du service"
+        }
+      },
+      "nom": "⚠ Témoin réseau"
+    },
     "openai": {
       "connexions": {
         "abonnement": {
@@ -312,7 +341,7 @@
       "nom": "OpenAI"
     }
   },
-  "genere": "2026-10-12T09:13:33Z",
+  "genere": "2026-10-12T10:33:34Z",
   "source": "https://models.dev/api.json",
   "version": 2
 }
