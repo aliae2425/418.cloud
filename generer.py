@@ -39,13 +39,19 @@ ICI = os.path.dirname(os.path.abspath(__file__))
 MAISON = os.path.join(ICI, 'maison.json')
 SORTIE = os.path.join(ICI, 'api.json')
 
-VERSION = 1
+# 2 : les modèles vivent sous une CONNEXION, pas sous le fournisseur. Un
+# fournisseur, c'est une maison ; une connexion, une porte — et les deux
+# portes d'OpenAI ne donnent pas sur les mêmes modèles. Le client refuse une
+# version qu'il ne sait pas lire plutôt que d'en tirer n'importe quoi.
+VERSION = 2
 
 # Les fournisseurs qu'on sert, et sous quelle forme on s'y connecte.
 # Y figurer suffit à apparaître dans `/connect` ; en sortir suffit à
 # disparaître. C'est tout le pouvoir qu'on voulait reprendre.
 SERVIS = {
-    'openai': {'nom': 'OpenAI', 'connexion': 'cle', 'limite': 12},
+    'openai': {'nom': 'OpenAI', 'connexion': 'cle',
+               'etiquette': 'Clé API', 'limite': 12,
+               'detail': "facturée à l'usage"},
 }
 
 # Ce qui n'est pas un modèle de conversation. Le filtre est volontairement
@@ -92,11 +98,16 @@ def depuis_models_dev(amont):
         lus.sort(key=lambda m: m.get('release_date') or '', reverse=True)
         fournisseurs[identifiant] = {
             'nom': reglage['nom'],
-            'connexion': reglage['connexion'],
-            'env': list(source.get('env') or []),
             'doc': source.get('doc') or '',
-            'modeles': dict((m['id'], convertir(m))
-                            for m in lus[:reglage['limite']]),
+            'connexions': {
+                reglage['connexion']: {
+                    'nom': reglage['etiquette'],
+                    'detail': reglage.get('detail') or '',
+                    'env': list(source.get('env') or []),
+                    'modeles': dict((m['id'], convertir(m))
+                                    for m in lus[:reglage['limite']]),
+                },
+            },
         }
     return fournisseurs
 
@@ -114,12 +125,16 @@ def fabriquer():
     fournisseurs = depuis_models_dev(tirer())
     ajouts = maison()
     for identifiant, entree in ajouts.items():
+        if identifiant.startswith('_'):
+            continue                       # commentaire du fichier, pas une entrée
+        voies = entree.get('connexions') or {}
         if identifiant in fournisseurs:
-            # Un fournisseur décrit des deux côtés : la main l'emporte. C'est
-            # la porte de sortie quand l'amont se trompe ou tarde.
-            fournisseurs[identifiant]['modeles'].update(entree.get('modeles') or {})
-            print('  + {0} : {1} modèles ajoutés à la main'.format(
-                identifiant, len(entree.get('modeles') or {})))
+            # Fusion CONNEXION PAR CONNEXION : la main l'emporte sur l'amont
+            # pour celles qu'elle décrit, et n'efface pas les autres. C'est la
+            # porte de sortie quand models.dev se trompe ou tarde.
+            fournisseurs[identifiant]['connexions'].update(voies)
+            print('  + {0} : {1} connexion(s) à la main'.format(
+                identifiant, len(voies)))
         else:
             fournisseurs[identifiant] = entree
             print('  + {0} : fournisseur entièrement à la main'.format(identifiant))
@@ -144,7 +159,9 @@ def ecrire(charge, chemin=SORTIE):
 
 def main():
     charge = fabriquer()
-    compte = sum(len(f['modeles']) for f in charge['fournisseurs'].values())
+    compte = sum(len(v.get('modeles') or {})
+                 for f in charge['fournisseurs'].values()
+                 for v in (f.get('connexions') or {}).values())
     if '--verifier' in sys.argv:
         print('{0} fournisseurs, {1} modèles — rien écrit'.format(
             len(charge['fournisseurs']), compte))
