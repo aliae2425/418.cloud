@@ -52,6 +52,11 @@ SERVIS = {
     'openai': {'nom': 'OpenAI', 'connexion': 'cle',
                'etiquette': 'Clé API', 'limite': 12,
                'detail': "facturée à l'usage"},
+    # Clé seulement : l'abonnement Claude Pro/Max n'est pas propose, cf.
+    # `maison.json`. Anthropic l'interdit explicitement.
+    'anthropic': {'nom': 'Anthropic', 'connexion': 'cle',
+                  'etiquette': 'Clé API', 'limite': 10,
+                  'detail': "facturée à l'usage"},
 }
 
 # Ce qui n'est pas un modèle de conversation. Le filtre est volontairement

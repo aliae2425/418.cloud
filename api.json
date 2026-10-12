@@ -1,62 +1,179 @@
 {
   "fournisseurs": {
-    "essai-filtre": {
-      "_essai": "TEMOIN, a retirer apres verification. Ne doit JAMAIS apparaitre a la premiere etape de /connect : aucune de ses connexions n'est couverte par un adaptateur du volet. S'il s'affiche, le filtre ne fait pas son travail et on proposerait une voie sans issue.",
-      "connexions": {
-        "inconnue-au-volet": {
-          "detail": "aucun adaptateur ne la couvre",
-          "env": [],
-          "modeles": {
-            "peu-importe": {
-              "cout": {
-                "cache": 0,
-                "entree": 0,
-                "sortie": 0
-              },
-              "limite": {
-                "contexte": 1000,
-                "sortie": 1000
-              },
-              "nom": "Peu importe",
-              "outils": true,
-              "pieces": false,
-              "raisonnement": false,
-              "sorti": ""
-            }
-          },
-          "nom": "Voie sans issue"
-        }
-      },
-      "nom": "⚠ Ne doit PAS apparaître"
-    },
-    "essai-reseau": {
-      "_essai": "TEMOIN RESEAU, a retirer apres verification. Il n'existe QUE cote service : il n'est PAS dans l'instantane embarque du volet. S'il apparait a la premiere etape de /connect, c'est que le client a bien tire cloud.418.archi — c'est la seule chose qui le prouve, puisque les autres temoins sont satisfaits par l'instantane. Sa connexion est `cle`, donc il est vraiment proposable ; ne pas le choisir, aucune cle ne lui repondra.",
+    "anthropic": {
       "connexions": {
         "cle": {
-          "detail": "présent seulement sur cloud.418.archi",
-          "env": [],
+          "detail": "facturée à l'usage",
+          "env": [
+            "ANTHROPIC_API_KEY"
+          ],
           "modeles": {
-            "essai-reseau-modele": {
+            "claude-fable-5": {
               "cout": {
-                "cache": 0,
-                "entree": 0,
-                "sortie": 0
+                "cache": 1,
+                "entree": 10,
+                "sortie": 50
               },
               "limite": {
-                "contexte": 4321000,
-                "sortie": 1000
+                "contexte": 1000000,
+                "sortie": 128000
               },
-              "nom": "⚠ Modèle témoin réseau",
+              "nom": "Claude Fable 5",
               "outils": true,
-              "pieces": false,
-              "raisonnement": false,
-              "sorti": "2099-12-31"
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-06-07"
+            },
+            "claude-fable-5-1": {
+              "cout": {
+                "cache": 0.25,
+                "entree": 10,
+                "sortie": 50
+              },
+              "limite": {
+                "contexte": 1000000,
+                "sortie": 128000
+              },
+              "nom": "Claude Fable 5.1",
+              "outils": true,
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-09-01"
+            },
+            "claude-haiku-5-5": {
+              "cout": {
+                "cache": 0.01,
+                "entree": 0.1,
+                "sortie": 0.5
+              },
+              "limite": {
+                "contexte": 1000000,
+                "sortie": 128000
+              },
+              "nom": "Claude Haiku 5.5",
+              "outils": true,
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-10-07"
+            },
+            "claude-opus-4-7": {
+              "cout": {
+                "cache": 0.5,
+                "entree": 5,
+                "sortie": 25
+              },
+              "limite": {
+                "contexte": 1000000,
+                "sortie": 128000
+              },
+              "nom": "Claude Opus 4.7",
+              "outils": true,
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-04-14"
+            },
+            "claude-opus-4-8": {
+              "cout": {
+                "cache": 0.5,
+                "entree": 5,
+                "sortie": 25
+              },
+              "limite": {
+                "contexte": 1000000,
+                "sortie": 128000
+              },
+              "nom": "Claude Opus 4.8",
+              "outils": true,
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-05-28"
+            },
+            "claude-opus-5": {
+              "cout": {
+                "cache": 0.5,
+                "entree": 5,
+                "sortie": 25
+              },
+              "limite": {
+                "contexte": 1000000,
+                "sortie": 128000
+              },
+              "nom": "Claude Opus 5",
+              "outils": true,
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-07-24"
+            },
+            "claude-opus-5-5": {
+              "cout": {
+                "cache": 0.2,
+                "entree": 4,
+                "sortie": 20
+              },
+              "limite": {
+                "contexte": 1000000,
+                "sortie": 128000
+              },
+              "nom": "Claude Opus 5.5",
+              "outils": true,
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-09-22"
+            },
+            "claude-sonnet-4-6": {
+              "cout": {
+                "cache": 0.3,
+                "entree": 3,
+                "sortie": 15
+              },
+              "limite": {
+                "contexte": 1000000,
+                "sortie": 128000
+              },
+              "nom": "Claude Sonnet 4.6",
+              "outils": true,
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-02-17"
+            },
+            "claude-sonnet-5": {
+              "cout": {
+                "cache": 0.2,
+                "entree": 2,
+                "sortie": 10
+              },
+              "limite": {
+                "contexte": 1000000,
+                "sortie": 128000
+              },
+              "nom": "Claude Sonnet 5",
+              "outils": true,
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-06-29"
+            },
+            "claude-sonnet-5-5": {
+              "cout": {
+                "cache": 0.1,
+                "entree": 2,
+                "sortie": 10
+              },
+              "limite": {
+                "contexte": 1000000,
+                "sortie": 128000
+              },
+              "nom": "Claude Sonnet 5.5",
+              "outils": true,
+              "pieces": true,
+              "raisonnement": true,
+              "sorti": "2026-09-28"
             }
           },
-          "nom": "Venu du service"
+          "nom": "Clé API"
         }
       },
-      "nom": "⚠ Témoin réseau"
+      "doc": "https://docs.anthropic.com/en/docs/about-claude/models",
+      "nom": "Anthropic"
     },
     "openai": {
       "connexions": {
@@ -66,23 +183,6 @@
           "detail": "votre abonnement — ne coûte rien au jeton",
           "env": [],
           "modeles": {
-            "418-essai-catalogue": {
-              "_essai": "TEMOIN, a retirer apres verification. Doit APPARAITRE a la troisieme etape de /connect sur la voie abonnement, et dans /model. Valeurs reconnaissables — 1234 k, « pieces » alors que l'abonnement n'en prend pas. NE PAS LE CHOISIR : aucun modele de ce nom n'existe.",
-              "cout": {
-                "cache": 0,
-                "entree": 0,
-                "sortie": 0
-              },
-              "limite": {
-                "contexte": 1234000,
-                "sortie": 1000
-              },
-              "nom": "⚠ Témoin de catalogue",
-              "outils": true,
-              "pieces": true,
-              "raisonnement": false,
-              "sorti": "2099-12-31"
-            },
             "gpt-5.6": {
               "cout": {
                 "cache": 0,
@@ -341,7 +441,7 @@
       "nom": "OpenAI"
     }
   },
-  "genere": "2026-10-12T10:33:34Z",
+  "genere": "2026-10-12T10:45:29Z",
   "source": "https://models.dev/api.json",
   "version": 2
 }

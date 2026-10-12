@@ -37,65 +37,15 @@
             "limite": { "contexte": 1050000, "sortie": 128000 },
             "cout": { "entree": 0, "sortie": 0, "cache": 0 },
             "sorti": ""
-          },
-          "418-essai-catalogue": {
-            "_essai": "TEMOIN, a retirer apres verification. Doit APPARAITRE a la troisieme etape de /connect sur la voie abonnement, et dans /model. Valeurs reconnaissables — 1234 k, « pieces » alors que l'abonnement n'en prend pas. NE PAS LE CHOISIR : aucun modele de ce nom n'existe.",
-            "nom": "⚠ Témoin de catalogue",
-            "outils": true,
-            "pieces": true,
-            "raisonnement": false,
-            "limite": { "contexte": 1234000, "sortie": 1000 },
-            "cout": { "entree": 0, "sortie": 0, "cache": 0 },
-            "sorti": "2099-12-31"
           }
         }
       }
     }
   },
 
-  "essai-reseau": {
-    "_essai": "TEMOIN RESEAU, a retirer apres verification. Il n'existe QUE cote service : il n'est PAS dans l'instantane embarque du volet. S'il apparait a la premiere etape de /connect, c'est que le client a bien tire cloud.418.archi — c'est la seule chose qui le prouve, puisque les autres temoins sont satisfaits par l'instantane. Sa connexion est `cle`, donc il est vraiment proposable ; ne pas le choisir, aucune cle ne lui repondra.",
-    "nom": "⚠ Témoin réseau",
-    "connexions": {
-      "cle": {
-        "nom": "Venu du service",
-        "detail": "présent seulement sur cloud.418.archi",
-        "env": [],
-        "modeles": {
-          "essai-reseau-modele": {
-            "nom": "⚠ Modèle témoin réseau",
-            "outils": true,
-            "pieces": false,
-            "raisonnement": false,
-            "limite": { "contexte": 4321000, "sortie": 1000 },
-            "cout": { "entree": 0, "sortie": 0, "cache": 0 },
-            "sorti": "2099-12-31"
-          }
-        }
-      }
-    }
-  },
-
-  "essai-filtre": {
-    "_essai": "TEMOIN, a retirer apres verification. Ne doit JAMAIS apparaitre a la premiere etape de /connect : aucune de ses connexions n'est couverte par un adaptateur du volet. S'il s'affiche, le filtre ne fait pas son travail et on proposerait une voie sans issue.",
-    "nom": "⚠ Ne doit PAS apparaître",
-    "connexions": {
-      "inconnue-au-volet": {
-        "nom": "Voie sans issue",
-        "detail": "aucun adaptateur ne la couvre",
-        "env": [],
-        "modeles": {
-          "peu-importe": {
-            "nom": "Peu importe",
-            "outils": true,
-            "pieces": false,
-            "raisonnement": false,
-            "limite": { "contexte": 1000, "sortie": 1000 },
-            "cout": { "entree": 0, "sortie": 0, "cache": 0 },
-            "sorti": ""
-          }
-        }
-      }
-    }
+  "anthropic": {
+    "_pourquoi": "Clé API SEULEMENT. L'abonnement Claude Pro/Max n'est PAS proposé : Anthropic l'interdit explicitement, et opencode a retiré ses greffons pour cette raison en 1.3.0 — leur doc le dit en toutes lettres. On ne va pas là où l'éditeur a écrit qu'il ne fallait pas, et on ne compte pas sur une porte qu'il peut fermer du jour au lendemain.",
+    "_comment": "Appelée EN DIRECT depuis la page : api.anthropic.com accepte l'origine avec l'en-tête `anthropic-dangerous-direct-browser-access`. L'en-tête s'appelle « dangerous » parce qu'il suppose la clé DANS le navigateur ; chez nous l'hôte l'injecte, donc on a la voie directe sans le danger qui lui vaut son nom.",
+    "connexions": {}
   }
 }
