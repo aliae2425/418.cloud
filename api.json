@@ -7,6 +7,23 @@
       "doc": "https://chatgpt.com",
       "env": [],
       "modeles": {
+        "418-essai-catalogue": {
+          "_essai": "TEMOIN, a retirer apres verification. Il doit APPARAITRE dans /model sur la voie abonnement, en tete (sorti 2099). S'il y est, la chaine catalogue -> menu marche de bout en bout. NE PAS LE CHOISIR : aucun modele de ce nom n'existe, le message suivant echouerait.",
+          "cout": {
+            "cache": 0,
+            "entree": 0,
+            "sortie": 0
+          },
+          "limite": {
+            "contexte": 1234000,
+            "sortie": 1000
+          },
+          "nom": "⚠ Témoin de catalogue",
+          "outils": true,
+          "pieces": true,
+          "raisonnement": false,
+          "sorti": "2099-12-31"
+        },
         "gpt-5.6": {
           "cout": {
             "cache": 0,
@@ -58,6 +75,31 @@
         }
       },
       "nom": "ChatGPT"
+    },
+    "essai-filtre": {
+      "_essai": "TEMOIN, a retirer apres verification. Il ne doit JAMAIS apparaitre dans /connect : sa `connexion` n'est couverte par aucun adaptateur du volet. S'il s'affiche, `fournisseursServis` ne filtre pas, et on proposerait une voie sans issue.",
+      "connexion": "inconnue-au-volet",
+      "doc": "",
+      "env": [],
+      "modeles": {
+        "peu-importe": {
+          "cout": {
+            "cache": 0,
+            "entree": 0,
+            "sortie": 0
+          },
+          "limite": {
+            "contexte": 1000,
+            "sortie": 1000
+          },
+          "nom": "Peu importe",
+          "outils": true,
+          "pieces": false,
+          "raisonnement": false,
+          "sorti": ""
+        }
+      },
+      "nom": "⚠ Ne doit PAS apparaître"
     },
     "openai": {
       "connexion": "cle",
@@ -262,7 +304,7 @@
       "nom": "OpenAI"
     }
   },
-  "genere": "2026-10-09T13:06:26Z",
+  "genere": "2026-10-12T07:16:43Z",
   "source": "https://models.dev/api.json",
   "version": 1
 }

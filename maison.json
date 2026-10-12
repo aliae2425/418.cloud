@@ -34,6 +34,35 @@
         "limite": { "contexte": 1050000, "sortie": 128000 },
         "cout": { "entree": 0, "sortie": 0, "cache": 0 },
         "sorti": ""
+      },
+      "418-essai-catalogue": {
+        "_essai": "TEMOIN, a retirer apres verification. Il doit APPARAITRE dans /model sur la voie abonnement, en tete (sorti 2099). S'il y est, la chaine catalogue -> menu marche de bout en bout. NE PAS LE CHOISIR : aucun modele de ce nom n'existe, le message suivant echouerait.",
+        "nom": "⚠ Témoin de catalogue",
+        "outils": true,
+        "pieces": true,
+        "raisonnement": false,
+        "limite": { "contexte": 1234000, "sortie": 1000 },
+        "cout": { "entree": 0, "sortie": 0, "cache": 0 },
+        "sorti": "2099-12-31"
+      }
+    }
+  },
+
+  "essai-filtre": {
+    "_essai": "TEMOIN, a retirer apres verification. Il ne doit JAMAIS apparaitre dans /connect : sa `connexion` n'est couverte par aucun adaptateur du volet. S'il s'affiche, `fournisseursServis` ne filtre pas, et on proposerait une voie sans issue.",
+    "nom": "⚠ Ne doit PAS apparaître",
+    "connexion": "inconnue-au-volet",
+    "env": [],
+    "doc": "",
+    "modeles": {
+      "peu-importe": {
+        "nom": "Peu importe",
+        "outils": true,
+        "pieces": false,
+        "raisonnement": false,
+        "limite": { "contexte": 1000, "sortie": 1000 },
+        "cout": { "entree": 0, "sortie": 0, "cache": 0 },
+        "sorti": ""
       }
     }
   }
